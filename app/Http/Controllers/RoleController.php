@@ -25,7 +25,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::get();
         $data=Role::query()->orderBy('id','desc');
-        $links=array(['name'=>'Roles','url'=>url('/roles')],);
+        $links=array(['name'=>'Rôles','url'=>url('/roles')],);
 
         if ($request->ajax()) {
             return DataTables::of($data)

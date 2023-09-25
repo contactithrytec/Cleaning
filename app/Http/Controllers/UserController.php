@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        //$data = User::orderBy('id','DESC')->paginate(5);
+        $data=User::query()->orderBy('id','desc');
+        $links=array(['name'=>'Users','url'=>url('/users')],);
+        if ($request->ajax()){
+            return DataTables::of($data)
+                ->editColumn('created_at',function ($data){
+                    return Carbon::parse($data->created_at)->format('H:i');
+                })
+                ->addColumn('actions',function (){
+                    return view('pages.users.actions.btn');
+                })->rawColumns(['actions'])->make(true);
+        }
+        return view('pages.users.index',compact('links'));
     }
 
     public function create()

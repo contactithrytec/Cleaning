@@ -30,6 +30,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::put('/update/{id}',[RoleController::class,'update'])->name('roles.update');
         Route::delete('/{id}',[RoleController::class,'delete'])->name('roles.delete');
     });
+    Route::group(['prefix'=>'users'],function (){
+        Route::get('/',[UserController::class,'index'])->name('users.index');
+
+    });
 
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

@@ -31,7 +31,7 @@
             <div class="col-12">
                 <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Invoices</h3>
+                <h3 class="card-title">La list des rôles</h3>
             </div>
             <div class="table-responsive">
             <table class="table table-striped" style="width:100%" id="roles_table">

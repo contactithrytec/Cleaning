@@ -22,6 +22,10 @@
         <!-- Page body -->
         <div class="page-body">
 
+            <div class="container-xl">
+                @include('layouts.extra.flash')
+            </div>
+
             @yield('content')
 
         </div>

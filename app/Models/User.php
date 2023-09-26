@@ -51,6 +51,7 @@ class User extends Authenticatable
         'role_name'=>'array',
     ];
 
+
     public function Groupes(){
         return $this->belongsToMany('App\Models\Groupe','user_groupes');
     }

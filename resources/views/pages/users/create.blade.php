@@ -109,6 +109,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" value="0" id="from_residence" name="from_residence">
                     <div class="card-footer bg-transparent mt-auto">
                         <div class="btn-list justify-content-end">
                             <button type="submit" class="btn btn-primary">
@@ -134,6 +135,14 @@
             theme: 'bootstrap-5',
             placeholder:'selectionez les permissions'
         } );
+
+        var url = window.location.href;
+        console.log(url)
+        var activeTab = url.substring(url.indexOf("=") + 1);
+
+        if(activeTab==1)
+            document.getElementById('from_residence').value=activeTab;
+
     </script>
 
 @endpush

@@ -50,6 +50,7 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permissions' => 'required|array',
@@ -59,7 +60,7 @@ class RoleController extends Controller
         $role->syncPermissions($request->permissions);
 
         return redirect()->route('roles.index')
-            ->with('success','Role created successfully');
+            ->with('success','Le rôle ajouté avec succès');
     }
 
     public function show($id)
@@ -92,13 +93,13 @@ class RoleController extends Controller
         $role->syncPermissions($request->input('permissions'));
 
         return redirect()->route('roles.index')
-            ->with('success','Role updated successfully');
+            ->with('success','Le rôle a été mis à jour avec succès');
     }
 
     public function delete($id)
     {
         DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('roles.index')
-            ->with('success','Role deleted successfully');
+            ->with('success','Le rôle supprimé avec succès');
     }
 }

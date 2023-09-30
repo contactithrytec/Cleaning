@@ -24,9 +24,12 @@ class UserController extends Controller
                 ->editColumn('created_at',function ($data){
                     return Carbon::parse($data->created_at)->format('H:i');
                 })
+                ->addColumn('full_name',function ($data){
+                    return $data->first_name.' '.$data->last_name;
+                })
                 ->addColumn('actions',function ($user){
                     return view('pages.users.actions.btn',compact('user'));
-                })->rawColumns(['actions'])->make(true);
+                })->rawColumns(['actions','full_name'])->make(true);
         }
         return view('pages.users.index',compact('links'));
     }
@@ -62,9 +65,12 @@ class UserController extends Controller
 
             $user = User::create($input);
             $user->assignRole($request->input('role_name'));
-
-        return redirect()->route('users.index')
-            ->with('success',"L'utilisateur créé avec succès");
+            if ($request->from_residence=='0')
+                return redirect()->route('users.index')
+                    ->with('success',"L'utilisateur créé avec succès");
+            else
+                return redirect()->route('residences.index')
+                    ->with('success',"L'utilisateur ajouté avec succès");
     }
 
     public function show($id)

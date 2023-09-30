@@ -12,7 +12,7 @@ class Apartment extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable=[
-        'num','name','priority','note','residence_id','type_id'
+        'num','name','priority','note','residence_id','type_id','status'
     ];
 
     public function TypeApartment(){

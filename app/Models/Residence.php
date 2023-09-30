@@ -14,6 +14,7 @@ class Residence extends Model
        'name','user_id'
     ];
 
+
     public function UserResidence(){
         return $this->belongsTo('App\Models\User','user_id');
     }

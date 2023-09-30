@@ -27,7 +27,7 @@ class UsersSeeder extends Seeder
             'phone_number'=>'0676843178',
             'status'=>1,
             'role_name'=>['admin'],
-            'email' => 'ibra.@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
         ]);
 

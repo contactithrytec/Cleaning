@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ResidenceController;
+use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\TypeController;
+use App\Http\Controllers\ControllersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +30,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function() {
     Route::group(['prefix'=>'roles'],function (){
         Route::get('/', [RoleController::class, 'index'])->name('roles.index');
-        Route::post('/store',[RoleController::class,'create'])->name('roles.store');
+        Route::post('/store',[RoleController::class,'store'])->name('roles.store');
         Route::put('/update/{id}',[RoleController::class,'update'])->name('roles.update');
         Route::delete('/{id}',[RoleController::class,'delete'])->name('roles.delete');
     });
@@ -39,7 +43,42 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('/{id}',[UserController::class,'delete'])->name('users.delete');
 
     });
+    Route::group(['prefix'=>'residences'],function (){
+       Route::get('/',[ResidenceController::class,'index'])->name('residences.index');
+       Route::get('/detail/{id}',[ResidenceController::class,'show'])->name('residences.show');
+       Route::get('/show_controllers/{id}',[ResidenceController::class,'showControllers'])->name('residences.show_controllers');
+       Route::post('/store',[ResidenceController::class,'store'])->name('residences.store');
+       Route::put('/update/{id}',[ResidenceController::class,'update'])->name('residences.update');
+       Route::delete('/{id}',[ResidenceController::class,'delete'])->name('residences.delete');
+    });
 
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
+    Route::group(['prefix'=>'apartments'],function (){
+        Route::get('/',[ApartmentController::class,'index'])->name('apartments.index');
+        Route::get('/create/{id}',[ApartmentController::class,'create'])->name('apartments.create');
+        Route::post('/store',[ApartmentController::class,'store'])->name('apartments.store');
+        Route::get('/edit/{id}',[ApartmentController::class,'edit'])->name('apartments.edit');
+        Route::put('/update/{id}',[ApartmentController::class,'update'])->name('apartments.update');
+        Route::delete('/{id}',[ApartmentController::class,'delete'])->name('apartments.delete');
+    });
+
+    Route::group(['prefix'=>'types'],function (){
+        Route::get('/',[TypeController::class,'index'])->name('types.index');
+        Route::post('/store',[TypeController::class,'store'])->name('types.store');
+        Route::put('/update/{id}',[TypeController::class,'update'])->name('types.update');
+        Route::delete('/{id}',[TypeController::class,'delete'])->name('types.delete');
+    });
+
+    Route::group(['prefix'=>'controllers'],function (){
+
+        Route::get('/',[ControllersController::class,'index'])->name('controllers.index');
+        Route::get('/create',[ControllersController::class,'create'])->name('controllers.create');
+        Route::post('/store',[ControllersController::class,'store'])->name('controllers.store');
+        Route::get('/edit/{id}',[ControllersController::class,'edit'])->name('controllers.edit');
+        Route::put('/update/{id}',[ControllersController::class,'update'])->name('controllers.update');
+        Route::delete('/{id}',[ControllersController::class,'delete'])->name('controllers.delete');
+
+    });
+
+  /*  Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);*/
 });

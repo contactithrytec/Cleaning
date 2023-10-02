@@ -34,26 +34,26 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                    <input type="text" class="form-control" name="username" id="username" value="" placeholder="entrez le nom d'utilisateur" Required>
+                                    <input type="text" class="form-control" name="username" id="username" value="{{old('username')}}" placeholder="entrez le nom d'utilisateur" Required>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="form-label Required">Nom</div>
-                                <input type="text" class="form-control" name="last_name" id="last_name" value="" placeholder="entrez le nom" Required>
+                                <input type="text" class="form-control" name="last_name" id="last_name" value="{{old('last_name')}}" placeholder="entrez le nom" Required>
                             </div>
                             <div class="col-md">
                                 <div class="form-label Required">Prénom</div>
-                                <input type="text" class="form-control" name="first_name" id="first_name" value="" placeholder="entrez le prénom" Required>
+                                <input type="text" class="form-control" name="first_name" id="first_name" value="{{old('first_name')}}" placeholder="entrez le prénom" Required>
                             </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-md">
                                 <div class="form-label Required">Adresse</div>
-                                <input type="text" class="form-control" value="" name="address" id="address" placeholder="entrez l'adresse">
+                                <input type="text" class="form-control" value="{{old('address')}}" name="address" id="address" placeholder="entrez l'adresse">
                             </div>
                             <div class="col-md">
                                 <div class="form-label Required">Numéro de téléphone</div>
-                                <input type="text" class="form-control" value="" name="phone_number" id="phone_number" placeholder="entrez le numéro de téléphone" Required>
+                                <input type="text" class="form-control" value="{{old('phone_number')}}" name="phone_number" id="phone_number" placeholder="entrez le numéro de téléphone" Required>
                             </div>
                         </div>
                         <h3 class="card-title mt-4 Required">Email</h3>
@@ -65,7 +65,7 @@
                                       <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                     @
                                     </span>
-                                        <input type="text" class="form-control" value="" name="email" id="email" placeholder="entrez l'e-mail" Required>
+                                        <input type="text" class="form-control" value="{{old('email')}}" name="email" id="email" placeholder="entrez l'e-mail" Required>
                                     </div>
                                 </div>
                             </div>
@@ -94,22 +94,37 @@
                                 <span class="form-check-label form-check-label-off">l'utilisateur est actuellement désactivé</span>
                             </label>
                         </div>
-                        <h3 class="card-title mt-4 Required">Les rôles</h3>
-                        <p class="card-subtitle">sélectionnez les rôles pour cet utilisateur.</p>
-                        <div>
-                            <div class="mb-3">
-                                <select class="form-select" id="role_name" name="role_name[]" data-placeholder="Choose anything" multiple required>
-                                    <option></option>
-                                    @if(isset($roles))
-                                        @foreach($roles as $role)
-                                            <option value="{{$role->name}}">{{$role->name}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                        @if(isset($residence))
+                            @if(isset($role))
+                                <h3 class="card-title mt-4 Required">Les rôles</h3>
+                                <div>
+                                    <div class="mb-3">
+                                        <input class="form-control"  name="role_name[]" value="{{old('role_name',$role->name)}}" required readonly>
+                                    </div>
+                                </div>
+                            @endif
+                                <input type="hidden" name="residence_id" value="{{$residence->id}}">
+                                <input type="hidden" name="redirect_url" id="redirect_url" value="{{route('residences.show_controllers',$residence->id)}}">
+
+                        @else
+                            <h3 class="card-title mt-4 Required">Les rôles</h3>
+                            <p class="card-subtitle">sélectionnez les rôles pour cet utilisateur.</p>
+                            <div>
+                                <div class="mb-3">
+                                    <select class="form-select" id="role_name" name="role_name[]" data-placeholder="Choose anything" multiple required>
+                                        <option></option>
+                                        @if(isset($roles))
+                                            @foreach($roles as $role)
+                                                <option value="{{$role->name}}">{{$role->name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                            <input type="hidden" value="0" id="from_residence" name="from_residence">
+
+                        @endif
                     </div>
-                    <input type="hidden" value="0" id="from_residence" name="from_residence">
                     <div class="card-footer bg-transparent mt-auto">
                         <div class="btn-list justify-content-end">
                             <button type="submit" class="btn btn-primary">
@@ -146,3 +161,4 @@
     </script>
 
 @endpush
+

@@ -10,6 +10,8 @@ class Controller extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $table='controllers';
+
     protected $fillable=[
         'user_id','residence_id'
     ];

@@ -26,7 +26,7 @@
                                     <a href="#tabs-detail" class="nav-link active" data-bs-toggle="tab" id="infos">Informations sur la résidence</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#tabs-controllers" class="nav-link" data-bs-toggle="tab" id="list_controllers">La liste des appartements de la résidence</a>
+                                    <a href="#tabs-controllers" class="nav-link" data-bs-toggle="tab" id="list_controllers">La liste des controlleurs de la résidence</a>
                                 </li>
                             </ul>
                         </div>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-controllers">
-                                    @include('pages.controllers.index')
+                                    @include('pages.controllers.index',['residence_id'=>$residence->id])
                                 </div>
                             </div>
                         </div>

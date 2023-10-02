@@ -16,7 +16,6 @@
                             <thead >
                             <tr>
                                 <th>ID</th>
-                               {{-- <th>Résidence de l'appartement</th>--}}
                                 <th>Nom de controlleur</th>
                                 <th>Numéro de téléphone</th>
                                 <th>Le rôle</th>
@@ -45,7 +44,13 @@
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
             },
             ajax:{
-                url:'/controllers/',
+                url:'/controllers?where=' + JSON.stringify({
+                    "where": [
+                        {
+                            'residence_id': "{{$residence->id}}"
+                        }
+                    ]
+                })
             },
             columns:[
                 {data:'id',name:'id'},

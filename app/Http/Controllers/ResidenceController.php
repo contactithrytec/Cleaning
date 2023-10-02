@@ -43,7 +43,7 @@ class ResidenceController extends Controller
     public function showControllers(Request $request,$id){
 
         $links=array(['name'=>'Résidences','url'=>url('/residences')],
-            ['name'=>'La liste des controlleur','url'=>url('/residences/detail/'.$id)]);
+            ['name'=>'La liste des controlleurs','url'=>url('/residences/show_controllers/'.$id)]);
         $residence=Residence::with(['UserResidence'])->find($id);
 
         return view('pages.controllers.detail',compact('links','residence'));

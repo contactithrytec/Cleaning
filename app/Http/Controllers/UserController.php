@@ -54,6 +54,11 @@ class UserController extends Controller
                 'password' => 'required|same:confirm-password',
                 'role_name' => ['required','array']
             ]);
+          if ($request->has('residence_id'))
+              $validator=  $this->validate($request, [
+                  'residence_id'=>['required','exists:residences,id']
+              ]);
+
 
             if(isset($request->status))
                 $request->request->add(['status'=>1]);
@@ -65,12 +70,24 @@ class UserController extends Controller
 
             $user = User::create($input);
             $user->assignRole($request->input('role_name'));
-            if ($request->from_residence=='0')
-                return redirect()->route('users.index')
-                    ->with('success',"L'utilisateur créé avec succès");
-            else
-                return redirect()->route('residences.index')
-                    ->with('success',"L'utilisateur ajouté avec succès");
+
+            if ($request->has('residence_id')){
+                $input=['user_id'=>$user->id,'residence_id'=>$request->residence_id];
+                $controller=\App\Models\Controller::create($input);
+                $path=$request->redirect_url;
+                $tab='#tabs-controllers';
+                return redirect()->to($path.$tab)->with('success',"le controlleur ajouté avec succès");
+
+            }
+            else{
+                if ($request->from_residence=='0')
+                    return redirect()->route('users.index')
+                        ->with('success',"L'utilisateur créé avec succès");
+                else
+                    return redirect()->route('residences.index')
+                        ->with('success',"L'utilisateur ajouté avec succès");
+            }
+
     }
 
     public function show($id)
@@ -103,6 +120,11 @@ class UserController extends Controller
             'role_name' => 'required'
         ]);
 
+        if ($request->has('residence_id'))
+            $validator=  $this->validate($request, [
+                'residence_id'=>['required','exists:residences,id']
+            ]);
+
         if(isset($request->status))
             $request->request->add(['status'=>1]);
         else
@@ -121,8 +143,19 @@ class UserController extends Controller
 
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('users.index')
-            ->with('success',"L'utilisateur a été mis à jour avec succès");
+        if ($request->has('residence_id')){
+            $controller=\App\Models\Controller::find($request->controller_id);
+            $input=['user_id'=>$user->id,'residence_id'=>$request->residence_id];
+            $controller->update($input);
+            $path=$request->redirect_url;
+            $tab='#tabs-controllers';
+            return redirect()->to($path.$tab)->with('success',"le controlleur a été mis à jour avec succès");
+
+        }
+        else {
+            return redirect()->route('users.index')
+                ->with('success', "L'utilisateur a été mis à jour avec succès");
+        }
     }
 
     public function delete($id)

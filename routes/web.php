@@ -71,11 +71,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['prefix'=>'controllers'],function (){
 
         Route::get('/',[ControllersController::class,'index'])->name('controllers.index');
-        Route::get('/create',[ControllersController::class,'create'])->name('controllers.create');
-        Route::post('/store',[ControllersController::class,'store'])->name('controllers.store');
+        Route::get('/create/{id}',[ControllersController::class,'create'])->name('controllers.create');
         Route::get('/edit/{id}',[ControllersController::class,'edit'])->name('controllers.edit');
-        Route::put('/update/{id}',[ControllersController::class,'update'])->name('controllers.update');
-        Route::delete('/{id}',[ControllersController::class,'delete'])->name('controllers.delete');
+        Route::delete('/{id}',[ControllersController::class,'delet'])->name('controllers.delete');
 
     });
 
